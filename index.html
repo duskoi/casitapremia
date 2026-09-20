@@ -33,6 +33,23 @@
     .scan{margin:16px 0 0;font-weight:800}
     .foot{text-align:center;color:var(--muted);padding:30px 16px 0;font-size:.9rem}
     @media(max-width:720px){.hero{min-height:52vh;padding-bottom:70px}.wifi{grid-template-columns:1fr}.qrpanel{min-height:360px}main{margin-top:-28px}.row{align-items:flex-start;flex-direction:column}}
+
+    .quick{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
+    .quick a{background:var(--paper);color:var(--ink);text-decoration:none;border-radius:22px;padding:22px;display:flex;align-items:center;gap:16px;box-shadow:0 14px 40px rgba(22,52,45,.12);transition:.2s transform,.2s box-shadow}
+    .quick a:hover{transform:translateY(-3px);box-shadow:0 18px 48px rgba(22,52,45,.17)}
+    .navicon{width:54px;height:54px;border-radius:17px;background:#e7efe9;display:grid;place-items:center;flex:0 0 auto}
+    .navicon svg{width:28px;height:28px;stroke:var(--ink)}.quick strong{display:block;font-size:1.05rem}.quick small{color:var(--muted)}
+    .arrival{margin-top:28px}.arrival-head{padding:clamp(30px,6vw,68px);background:linear-gradient(130deg,#fffdf8,#f8eadc)}
+    .route-summary{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-size:.9rem}
+    .route-summary b{color:var(--ink);background:white;border:1px solid #dfe7e2;padding:8px 11px;border-radius:999px}.arrow{color:var(--accent);font-weight:900}
+    .steps{padding:0 clamp(24px,5vw,58px) 52px}.step{display:grid;grid-template-columns:58px 1fr;gap:18px;position:relative;padding:0 0 30px}
+    .step:not(:last-child):before{content:"";position:absolute;left:28px;top:56px;bottom:4px;width:2px;background:#d9e2dd}
+    .num{width:58px;height:58px;border-radius:18px;background:var(--ink);color:white;display:grid;place-items:center;font-family:Georgia,serif;font-size:1.35rem;position:relative;z-index:1}
+    .step-body{padding:5px 0 0}.step h3{font-family:Georgia,serif;font-size:1.45rem;font-weight:500;margin:0 0 7px}.step p{margin:0;color:var(--muted);line-height:1.55}
+    .en{font-size:.9rem;margin-top:6px!important;color:#87928d!important}.notice{margin-top:12px!important;padding:12px 15px;border-radius:13px;background:#f4eadf;color:#76523a!important;font-size:.9rem}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.button{background:var(--ink);color:white;border-radius:14px;padding:14px 19px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:.2s transform,.2s background}
+    .button:hover{transform:translateY(-2px);background:#225347}.button.secondary{background:white;color:var(--ink);border:1px solid #dfe7e2}.welcome{padding:30px;text-align:center;background:var(--ink);color:white}.welcome p{margin:7px 0;color:#dbe7e2}
+    @media(max-width:720px){.quick a{padding:15px;gap:11px}.quick small{display:none}.navicon{width:46px;height:46px;border-radius:14px}.step{grid-template-columns:48px 1fr;gap:14px}.num{width:48px;height:48px;border-radius:15px}.step:not(:last-child):before{left:23px;top:47px}}
   </style>
 </head>
 <body>
@@ -44,7 +61,11 @@
     </div>
   </header>
   <main>
-    <section class="card wifi" aria-labelledby="wifi-title">
+    <nav class="quick" aria-label="Accesos rápidos">
+      <a href="#wifi"><span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 20h.01M2 9a14.5 14.5 0 0 1 20 0"/></svg></span><span><strong>Wi‑Fi</strong><small>Conectar ahora</small></span></a>
+      <a href="#llegar"><span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><strong>Cómo llegar</strong><small>Desde el aeropuerto</small></span></a>
+    </nav>
+    <section class="card wifi" id="wifi" aria-labelledby="wifi-title">
       <div class="copy">
         <span class="tag">⌁ Wi‑Fi</span>
         <h2 id="wifi-title">Conéctate</h2>
@@ -60,6 +81,17 @@
           <p class="scan">Escanea para conectarte</p>
         </div>
       </div>
+    </section>
+    <section class="card arrival" id="llegar" aria-labelledby="arrival-title">
+      <div class="arrival-head"><span class="tag">Cómo llegar · How to arrive</span><h2 id="arrival-title">Del aeropuerto a Casita Premià</h2><p class="hint">Una ruta fácil en transporte público desde el Aeropuerto de Barcelona.</p><div class="route-summary"><b>Aeropuerto</b><span class="arrow">→</span><b>Barcelona Sants</b><span class="arrow">→</span><b>Premià de Mar</b><span class="arrow">→</span><b>Rectoria, 8</b></div></div>
+      <div class="steps">
+        <article class="step"><div class="num">1</div><div class="step-body"><h3>Sigue «Conexión»</h3><p>Al llegar al aeropuerto, sigue las señales de «Conexión» hasta la lanzadera gratuita que lleva a la estación de tren.</p><p class="en">Follow the “Connection” signs to the free shuttle for the train station.</p></div></article>
+        <article class="step"><div class="num">2</div><div class="step-body"><h3>Tren hasta Barcelona Sants</h3><p>Compra un billete con destino Premià de Mar. Toma el tren del aeropuerto y baja en <strong>Barcelona Sants</strong>.</p><p class="en">Buy a ticket to Premià de Mar. Take the airport train and get off at Barcelona Sants.</p></div></article>
+        <article class="step"><div class="num">3</div><div class="step-body"><h3>Cambia a la línea R1</h3><p>En Sants, busca la línea <strong>R1 de Rodalies</strong> en dirección Mataró, Blanes o Calella. Consulta las pantallas para confirmar la vía.</p><p class="en">At Sants, change to the R1 Rodalies line towards Mataró, Blanes or Calella. Check the screens for the platform.</p><p class="notice">La vía puede cambiar: comprueba siempre las pantallas de la estación.</p></div></article>
+        <article class="step"><div class="num">4</div><div class="step-body"><h3>Baja en Premià de Mar</h3><p>El trayecto desde Barcelona Sants dura aproximadamente 35 minutos.</p><p class="en">The journey from Barcelona Sants takes about 35 minutes.</p></div></article>
+        <article class="step"><div class="num">5</div><div class="step-body"><h3>Camina hasta Rectoria, 8</h3><p>Desde la estación de Premià de Mar, sigue el mapa hasta la casa.</p><p class="en">From Premià de Mar station, follow the map to the house.</p><div class="actions"><a class="button" href="https://www.google.com/maps/dir/?api=1&origin=Estaci%C3%B3+de+Premi%C3%A0+de+Mar&destination=Carrer+de+la+Rectoria+8%2C+Premi%C3%A0+de+Mar" target="_blank" rel="noopener">Abrir ruta a pie ↗</a><a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=Carrer+de+la+Rectoria+8%2C+Premi%C3%A0+de+Mar" target="_blank" rel="noopener">Ver la casa</a></div></div></article>
+      </div>
+      <div class="welcome"><strong>¡Buen viaje y bienvenido/a!</strong><p>Have a lovely journey and enjoy your stay.</p><small>Ivan & Alex</small></div>
     </section>
     <p class="foot">Casita Premià · Bienvenido/a</p>
   </main>
