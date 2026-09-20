@@ -32,7 +32,11 @@
     .qrbox img,.qrbox canvas{display:block;max-width:230px;height:auto}
     .scan{margin:16px 0 0;font-weight:800}
     .foot{text-align:center;color:var(--muted);padding:30px 16px 0;font-size:.9rem}
-    @media(max-width:720px){.hero{min-height:52vh;padding-bottom:70px}.wifi{grid-template-columns:1fr}.qrpanel{min-height:360px}main{margin-top:-28px}.row{align-items:flex-start;flex-direction:column}}
+    .modal{position:fixed;inset:0;z-index:20;display:none;place-items:center;padding:20px;background:rgba(10,31,26,.72);backdrop-filter:blur(8px)}
+    .modal.open{display:grid}.modal-card{position:relative;width:min(760px,100%);max-height:calc(100vh - 40px);overflow:auto;background:var(--paper);border-radius:28px;box-shadow:0 28px 80px rgba(0,0,0,.3)}
+    .modal-grid{display:grid;grid-template-columns:1fr .85fr}.modal-copy{padding:clamp(28px,5vw,52px)}.modal-qr{background:#d9a06f;display:grid;place-items:center;padding:32px;text-align:center}
+    .close{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:50%;padding:0;font-size:1.5rem;z-index:2;background:rgba(23,53,46,.92)}
+    @media(max-width:720px){.hero{min-height:52vh;padding-bottom:70px}.wifi{grid-template-columns:1fr}.qrpanel{min-height:360px}main{margin-top:-28px}.row{align-items:flex-start;flex-direction:column}.modal-grid{grid-template-columns:1fr}.modal-qr{padding:28px}.modal-card{max-height:calc(100vh - 24px)}}
 
     .quick{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
     .quick a{background:var(--paper);color:var(--ink);text-decoration:none;border-radius:22px;padding:22px;display:flex;align-items:center;gap:16px;box-shadow:0 14px 40px rgba(22,52,45,.12);transition:.2s transform,.2s box-shadow}
@@ -62,44 +66,33 @@
   </header>
   <main>
     <nav class="quick" aria-label="Accesos rápidos">
-      <a href="#wifi"><span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 20h.01M2 9a14.5 14.5 0 0 1 20 0"/></svg></span><span><strong>Wi‑Fi</strong><small>Conectar ahora</small></span></a>
-      <a href="#llegar"><span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><strong>Cómo llegar</strong><small>Desde el aeropuerto</small></span></a>
+      <a href="#" id="open-wifi"><span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 20h.01M2 9a14.5 14.5 0 0 1 20 0"/></svg></span><span><strong>Wi‑Fi</strong><small>Conectar ahora</small></span></a>
+      <a href="airport-how-to-arrive.pdf" target="_blank" rel="noopener"><span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><strong>Cómo llegar</strong><small>Abrir guía en PDF</small></span></a>
     </nav>
-    <section class="card wifi" id="wifi" aria-labelledby="wifi-title">
-      <div class="copy">
-        <span class="tag">⌁ Wi‑Fi</span>
-        <h2 id="wifi-title">Conéctate</h2>
-        <p class="hint">Escanea el código QR con la cámara del móvil o introduce estos datos manualmente.</p>
-        <div class="credentials">
-          <div class="row"><div><span class="label">Red</span><span class="value">MINI</span></div></div>
-          <div class="row"><div><span class="label">Contraseña</span><span class="value" id="password">4040404040</span></div><button id="copy" type="button">Copiar</button></div>
-        </div>
-      </div>
-      <div class="qrpanel">
-        <div>
-          <div class="qrbox" id="qrcode" role="img" aria-label="Código QR para conectarse a la red MINI"></div>
-          <p class="scan">Escanea para conectarte</p>
-        </div>
-      </div>
-    </section>
-    <section class="card arrival" id="llegar" aria-labelledby="arrival-title">
-      <div class="arrival-head"><span class="tag">Cómo llegar · How to arrive</span><h2 id="arrival-title">Del aeropuerto a Casita Premià</h2><p class="hint">Una ruta fácil en transporte público desde el Aeropuerto de Barcelona.</p><div class="route-summary"><b>Aeropuerto</b><span class="arrow">→</span><b>Barcelona Sants</b><span class="arrow">→</span><b>Premià de Mar</b><span class="arrow">→</span><b>Rectoria, 8</b></div></div>
-      <div class="steps">
-        <article class="step"><div class="num">1</div><div class="step-body"><h3>Sigue «Conexión»</h3><p>Al llegar al aeropuerto, sigue las señales de «Conexión» hasta la lanzadera gratuita que lleva a la estación de tren.</p><p class="en">Follow the “Connection” signs to the free shuttle for the train station.</p></div></article>
-        <article class="step"><div class="num">2</div><div class="step-body"><h3>Tren hasta Barcelona Sants</h3><p>Compra un billete con destino Premià de Mar. Toma el tren del aeropuerto y baja en <strong>Barcelona Sants</strong>.</p><p class="en">Buy a ticket to Premià de Mar. Take the airport train and get off at Barcelona Sants.</p></div></article>
-        <article class="step"><div class="num">3</div><div class="step-body"><h3>Cambia a la línea R1</h3><p>En Sants, busca la línea <strong>R1 de Rodalies</strong> en dirección Mataró, Blanes o Calella. Consulta las pantallas para confirmar la vía.</p><p class="en">At Sants, change to the R1 Rodalies line towards Mataró, Blanes or Calella. Check the screens for the platform.</p><p class="notice">La vía puede cambiar: comprueba siempre las pantallas de la estación.</p></div></article>
-        <article class="step"><div class="num">4</div><div class="step-body"><h3>Baja en Premià de Mar</h3><p>El trayecto desde Barcelona Sants dura aproximadamente 35 minutos.</p><p class="en">The journey from Barcelona Sants takes about 35 minutes.</p></div></article>
-        <article class="step"><div class="num">5</div><div class="step-body"><h3>Camina hasta Rectoria, 8</h3><p>Desde la estación de Premià de Mar, sigue el mapa hasta la casa.</p><p class="en">From Premià de Mar station, follow the map to the house.</p><div class="actions"><a class="button" href="https://www.google.com/maps/dir/?api=1&origin=Estaci%C3%B3+de+Premi%C3%A0+de+Mar&destination=Carrer+de+la+Rectoria+8%2C+Premi%C3%A0+de+Mar" target="_blank" rel="noopener">Abrir ruta a pie ↗</a><a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=Carrer+de+la+Rectoria+8%2C+Premi%C3%A0+de+Mar" target="_blank" rel="noopener">Ver la casa</a></div></div></article>
-      </div>
-      <div class="welcome"><strong>¡Buen viaje y bienvenido/a!</strong><p>Have a lovely journey and enjoy your stay.</p><small>Ivan & Alex</small></div>
-    </section>
     <p class="foot">Casita Premià · Bienvenido/a</p>
   </main>
+  <div class="modal" id="wifi-modal" role="dialog" aria-modal="true" aria-labelledby="wifi-title">
+    <div class="modal-card">
+      <button class="close" id="close-wifi" type="button" aria-label="Cerrar">×</button>
+      <div class="modal-grid">
+        <div class="modal-copy"><span class="tag">⌁ Wi‑Fi</span><h2 id="wifi-title">Conéctate</h2><p class="hint">Escanea el código QR o introduce estos datos.</p><div class="credentials"><div class="row"><div><span class="label">Red</span><span class="value">MINI</span></div></div><div class="row"><div><span class="label">Contraseña</span><span class="value">4040404040</span></div><button id="copy" type="button">Copiar</button></div></div></div>
+        <div class="modal-qr"><div><div class="qrbox" id="qrcode" role="img" aria-label="Código QR para conectarse a la red MINI"></div><p class="scan">Escanea para conectarte</p></div></div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script>
     new QRCode(document.getElementById('qrcode'),{text:'WIFI:T:WPA;S:MINI;P:4040404040;;',width:230,height:230,colorDark:'#17352e',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
     const button=document.getElementById('copy');
     button.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('4040404040');button.textContent='Copiada ✓'}catch{button.textContent='4040404040'}setTimeout(()=>button.textContent='Copiar',2200)});
+    const modal=document.getElementById('wifi-modal');
+    const openWifi=document.getElementById('open-wifi');
+    const closeWifi=document.getElementById('close-wifi');
+    function closeModal(){modal.classList.remove('open');document.body.style.overflow='';openWifi.focus()}
+    openWifi.addEventListener('click',event=>{event.preventDefault();modal.classList.add('open');document.body.style.overflow='hidden';closeWifi.focus()});
+    closeWifi.addEventListener('click',closeModal);
+    modal.addEventListener('click',event=>{if(event.target===modal)closeModal()});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('open'))closeModal()});
   </script>
 </body>
 </html>
