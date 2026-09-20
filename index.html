@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#16342d">
+  <title>Casita Premià · Guía de bienvenida</title>
+  <style>
+    :root{--ink:#17352e;--cream:#f5f0e6;--paper:#fffdf8;--accent:#d58c55;--muted:#687770}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream)}
+    .hero{min-height:58vh;display:grid;align-items:end;padding:clamp(28px,6vw,72px);position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(17,54,45,.96),rgba(27,72,61,.78)),radial-gradient(circle at 80% 20%,#d9a273 0 10%,transparent 11%),linear-gradient(120deg,#244f42,#102d27)}
+    .hero:after{content:"";position:absolute;width:360px;height:360px;border:1px solid rgba(255,255,255,.15);border-radius:50%;right:-80px;top:-100px;box-shadow:0 0 0 60px rgba(255,255,255,.035),0 0 0 120px rgba(255,255,255,.025)}
+    .eyebrow{font-size:.77rem;letter-spacing:.2em;text-transform:uppercase;color:#f0c49e;font-weight:700}
+    h1{font-family:Georgia,serif;color:white;font-size:clamp(3.2rem,10vw,7rem);line-height:.88;margin:.18em 0;max-width:820px;font-weight:500}
+    .intro{color:#e9f0ed;max-width:520px;font-size:clamp(1rem,2vw,1.2rem);line-height:1.55}
+    main{width:min(1080px,calc(100% - 32px));margin:-38px auto 70px;position:relative}
+    .card{background:var(--paper);border-radius:28px;box-shadow:0 20px 55px rgba(22,52,45,.13);overflow:hidden}
+    .wifi{display:grid;grid-template-columns:1.25fr .75fr;min-height:420px}
+    .copy{padding:clamp(30px,6vw,68px)}
+    .tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#e7efe9;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    h2{font-family:Georgia,serif;font-size:clamp(2.25rem,5vw,4rem);font-weight:500;margin:18px 0 10px}
+    .hint{color:var(--muted);line-height:1.6;margin:0 0 28px}
+    .credentials{display:grid;gap:12px;margin:24px 0}
+    .row{border:1px solid #dfe7e2;border-radius:16px;padding:15px 17px;display:flex;justify-content:space-between;gap:18px;align-items:center}
+    .label{display:block;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:800}
+    .value{font-size:1.18rem;font-weight:800;overflow-wrap:anywhere}
+    button{border:0;background:var(--ink);color:white;border-radius:14px;padding:14px 19px;font:inherit;font-weight:800;cursor:pointer;transition:.2s transform,.2s background}
+    button:hover{transform:translateY(-2px);background:#225347}
+    .qrpanel{background:#d9a06f;display:grid;place-items:center;padding:35px;text-align:center}
+    .qrbox{background:white;padding:18px;border-radius:24px;box-shadow:0 12px 30px rgba(35,31,22,.18);min-width:266px;min-height:266px;display:grid;place-items:center}
+    .qrbox img,.qrbox canvas{display:block;max-width:230px;height:auto}
+    .scan{margin:16px 0 0;font-weight:800}
+    .foot{text-align:center;color:var(--muted);padding:30px 16px 0;font-size:.9rem}
+    @media(max-width:720px){.hero{min-height:52vh;padding-bottom:70px}.wifi{grid-template-columns:1fr}.qrpanel{min-height:360px}main{margin-top:-28px}.row{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Guía de bienvenida</div>
+      <h1>Casita<br>Premià</h1>
+      <p class="intro">Todo lo esencial para sentirte en casa desde el primer minuto.</p>
+    </div>
+  </header>
+  <main>
+    <section class="card wifi" aria-labelledby="wifi-title">
+      <div class="copy">
+        <span class="tag">⌁ Wi‑Fi</span>
+        <h2 id="wifi-title">Conéctate</h2>
+        <p class="hint">Escanea el código QR con la cámara del móvil o introduce estos datos manualmente.</p>
+        <div class="credentials">
+          <div class="row"><div><span class="label">Red</span><span class="value">MINI</span></div></div>
+          <div class="row"><div><span class="label">Contraseña</span><span class="value" id="password">4040404040</span></div><button id="copy" type="button">Copiar</button></div>
+        </div>
+      </div>
+      <div class="qrpanel">
+        <div>
+          <div class="qrbox" id="qrcode" role="img" aria-label="Código QR para conectarse a la red MINI"></div>
+          <p class="scan">Escanea para conectarte</p>
+        </div>
+      </div>
+    </section>
+    <p class="foot">Casita Premià · Bienvenido/a</p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    new QRCode(document.getElementById('qrcode'),{text:'WIFI:T:WPA;S:MINI;P:4040404040;;',width:230,height:230,colorDark:'#17352e',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+    const button=document.getElementById('copy');
+    button.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('4040404040');button.textContent='Copiada ✓'}catch{button.textContent='4040404040'}setTimeout(()=>button.textContent='Copiar',2200)});
+  </script>
+</body>
+</html>
