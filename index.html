@@ -166,12 +166,14 @@
     const doorForm=document.getElementById('door-form');
     const doorCode=document.getElementById('door-code');
     const doorMessage=document.getElementById('door-message');
-    function resetDoor(){doorCode.value='';doorMessage.textContent='';doorMessage.className='door-message'}
+    const entryWebhook='https://script.google.com/macros/s/AKfycbzw5FOFG4lEJLVXniZ1aXP7cqIijFLvkP7FCgT3xrNsOM9jb6HdGodGM2B8oZcSnL39/exec';
+    let entryNoticeSent=false;
+    function resetDoor(){doorCode.value='';doorMessage.textContent='';doorMessage.className='door-message';entryNoticeSent=false}
     function closeDoorModal(){doorModal.classList.remove('open');document.body.style.overflow='';resetDoor();openDoor.focus()}
     openDoor.addEventListener('click',event=>{event.preventDefault();resetDoor();doorModal.classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>doorCode.focus(),50)});
     closeDoor.addEventListener('click',closeDoorModal);
     doorModal.addEventListener('click',event=>{if(event.target===doorModal)closeDoorModal()});
-    doorForm.addEventListener('submit',event=>{event.preventDefault();const ok=doorCode.value==='1111';doorMessage.innerHTML=ok?translations[currentLang].doorSuccess+'<small>'+translations[currentLang].pushDoor+'</small>':translations[currentLang].doorError;doorMessage.className='door-message '+(ok?'success':'error');if(!ok){doorCode.select()}});
+    doorForm.addEventListener('submit',event=>{event.preventDefault();const ok=doorCode.value==='1111';doorMessage.innerHTML=ok?translations[currentLang].doorSuccess+'<small>'+translations[currentLang].pushDoor+'</small>':translations[currentLang].doorError;doorMessage.className='door-message '+(ok?'success':'error');if(ok&&!entryNoticeSent){entryNoticeSent=true;fetch(entryWebhook,{method:'POST',mode:'no-cors',keepalive:true}).catch(()=>{});}if(!ok){doorCode.select()}});
     document.addEventListener('keydown',event=>{if(event.key==='Escape'&&doorModal.classList.contains('open'))closeDoorModal()});
   </script>
 </body>
