@@ -166,7 +166,7 @@
     const doorForm=document.getElementById('door-form');
     const doorCode=document.getElementById('door-code');
     const doorMessage=document.getElementById('door-message');
-    const entryWebhook='https://script.google.com/macros/s/AKfycbzw5FOFG4lEJLVXniZ1aXP7cqIijFLvkP7FCgT3xrNsOM9jb6HdGodGM2B8oZcSnL39/exec';
+    const entryWebhook='https://script.google.com/macros/s/AKfycbzNxSktxbtjzSCPDXAIYFBnWerTCGBqAp0QDh3gWkF_WT-NL-PQTDgMLzfIBb5VETCx/exec';
     let entryNoticeSent=false;
     function resetDoor(){doorCode.value='';doorMessage.textContent='';doorMessage.className='door-message';entryNoticeSent=false}
     function closeDoorModal(){doorModal.classList.remove('open');document.body.style.overflow='';resetDoor();openDoor.focus()}
