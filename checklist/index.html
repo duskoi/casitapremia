@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17352e">
+  <title>Casita Premià · Checklist</title>
+  <style>
+    :root{--ink:#17352e;--cream:#f5f0e6;--paper:#fffdf8;--accent:#d58c55;--muted:#687770}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    .hero{min-height:340px;display:flex;align-items:end;padding:clamp(28px,6vw,72px);background:linear-gradient(135deg,rgba(10,31,27,.74),rgba(18,43,37,.38)),url("../casita-premia-bg.jpg") center 48%/cover no-repeat}
+    .eyebrow{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:#f0c49e;font-weight:800}
+    h1{font-family:Georgia,serif;color:#fff;font-size:clamp(3.2rem,9vw,6.5rem);line-height:.95;font-weight:500;margin:.22em 0}
+    .intro{color:#e9f0ed;max-width:600px;line-height:1.55;font-size:clamp(1rem,2vw,1.2rem)}
+    main{width:min(760px,calc(100% - 28px));margin:-34px auto 60px;position:relative}
+    .card{background:var(--paper);border-radius:28px;box-shadow:0 20px 55px rgba(22,52,45,.13);padding:clamp(24px,5vw,50px)}
+    .tag{display:inline-flex;padding:8px 12px;border-radius:99px;background:#e7efe9;font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    h2{font-family:Georgia,serif;font-weight:500;font-size:clamp(2rem,5vw,3rem);margin:16px 0 8px}
+    .hint{color:var(--muted);line-height:1.5;margin:0 0 24px}
+    .progress{font-weight:800;margin:0 0 10px}.track{height:8px;border-radius:9px;background:#e4e9e5;overflow:hidden;margin-bottom:24px}.fill{height:100%;width:0;background:var(--accent);transition:width .2s}
+    .items{display:grid;gap:11px}
+    .item{display:flex;align-items:center;gap:17px;padding:19px;border:1px solid #dfe7e2;border-radius:18px;background:white;cursor:pointer;transition:background .2s,border-color .2s}
+    .item:hover{background:#f8faf7}.item:has(input:checked){border-color:#9cc9ad;background:#edf7ef}
+    .item input{width:25px;height:25px;accent-color:var(--ink);flex:none;cursor:pointer}
+    .item span{font-weight:750;line-height:1.35}.item small{display:block;font-size:.86rem;font-weight:400;color:var(--muted);margin-top:3px}
+    .observations{margin-top:34px;padding:24px;border:1px solid #e7d3bd;border-radius:20px;background:#fbf3e9}.observations h3{font-family:Georgia,serif;font-size:2rem;font-weight:500;margin:0 0 8px}.observations p{color:#705842;line-height:1.5;margin:0 0 12px}
+    .suggestions{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0 16px}.suggestions button{background:#fff;color:var(--ink);border:1px solid #dcc6b0;border-radius:999px;padding:9px 13px;font-size:.88rem}.suggestions button:hover{background:#e7efe9}
+    textarea{width:100%;min-height:145px;resize:vertical;border:1px solid #cfdad4;border-radius:16px;padding:16px;background:white;color:var(--ink);font:inherit;line-height:1.5}
+    textarea:focus-visible,.item:focus-within,button:focus-visible{outline:3px solid #d58c55;outline-offset:2px}
+    .pending{margin:12px 0 0;color:#835b3d;font-size:.9rem;line-height:1.45}
+    .actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:26px}
+    button{border:0;background:var(--ink);color:white;border-radius:14px;padding:16px 22px;font:inherit;font-weight:800;cursor:pointer}
+    button:hover{background:#225347}.mail-hint{color:var(--muted);font-size:.85rem;line-height:1.45;max-width:350px}
+    button:disabled{opacity:.65;cursor:wait}.send-status{min-height:1.5em;margin:14px 0 0;font-weight:700;line-height:1.45}.send-status.error{color:#a5372e}.send-status.success{color:#175b35}
+    .foot{text-align:center;color:var(--muted);padding:28px;font-size:.88rem}
+    @media(max-width:600px){.hero{min-height:300px;padding-bottom:70px}.item{padding:16px}.actions button{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div><div class="eyebrow">Preparación para el próximo cliente</div><h1>Casita<br>Premià</h1><p class="intro">Checklist de limpieza y preparación de la casa.</p></div></header>
+  <main>
+    <form class="card" id="checklist">
+      <span class="tag">✓ Revisión de la casa</span>
+      <h2>Todo a punto</h2>
+      <p class="hint">Marca cada punto cuando lo hayas comprobado. Los que queden sin marcar se añadirán automáticamente a observaciones.</p>
+      <p class="progress" id="progress" aria-live="polite">0 de 6 verificados</p><div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
+      <div class="items">
+        <label class="item"><input type="checkbox" data-label="Terraza (sillas, césped…)" id="terrace"><span>Terraza<small>Sillas, césped…</small></span></label>
+        <label class="item"><input type="checkbox" data-label="Papel WC (4 rollos)" id="paper"><span>Papel WC<small>4 rollos</small></span></label>
+        <label class="item"><input type="checkbox" data-label="Limpieza debajo de las camas" id="beds"><span>Verificar limpieza debajo de las camas</span></label>
+        <label class="item"><input type="checkbox" data-label="Limpieza interior de la nevera" id="fridge"><span>Limpieza interior de la nevera</span></label>
+        <label class="item"><input type="checkbox" data-label="Bolsita con bayeta y estropajo" id="bag"><span>Bolsita con bayeta y estropajo</span></label>
+        <label class="item"><input type="checkbox" data-label="Cápsulas de café" id="coffee"><span>Cápsulas de café</span></label>
+      </div>
+      <section class="observations"><h3>Observaciones e incidencias</h3><p>Los puntos sin marcar aparecerán aquí y en el correo. Añade debajo cualquier detalle o incidencia adicional.</p><p class="pending" id="pending" aria-live="polite"></p><div class="suggestions" aria-label="Ejemplos de observaciones"><button type="button" data-note="Faltan cubiertos">+ Faltan cubiertos</button><button type="button" data-note="Sábanas viejas">+ Sábanas viejas</button><button type="button" data-note="Faltan cápsulas de café">+ Faltan cápsulas de café</button></div><textarea id="notes" placeholder="Otras observaciones, una por línea…" aria-label="Otras observaciones"></textarea></section>
+      <div class="actions"><button type="submit" id="send-button">Enviar checklist</button><span class="mail-hint">El checklist y las observaciones se enviarán a casitapremia@gmail.com.</span></div><p class="send-status" id="send-status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="foot">Casita Premià · Checklist de preparación</p>
+  </main>
+  <script>
+    const checks=[...document.querySelectorAll('.item input')];
+    const notes=document.getElementById('notes');
+    const pending=document.getElementById('pending');
+    function update(){
+      const done=checks.filter(item=>item.checked).length;
+      document.getElementById('progress').textContent=`${done} de ${checks.length} verificados`;
+      document.getElementById('fill').style.width=`${done/checks.length*100}%`;
+      const missing=checks.filter(item=>!item.checked).map(item=>item.dataset.label);
+      pending.textContent=missing.length?`Puntos sin marcar que se incluirán en observaciones: ${missing.join(' · ')}`:'No hay puntos pendientes. Puedes añadir otras observaciones.';
+    }
+    checks.forEach(item=>item.addEventListener('change',update));
+    document.querySelectorAll('[data-note]').forEach(button=>button.addEventListener('click',()=>{
+      const value=button.dataset.note;
+      const lines=notes.value.split('\n').map(line=>line.trim()).filter(Boolean);
+      if(!lines.some(line=>line.toLocaleLowerCase('es')===value.toLocaleLowerCase('es')))lines.push(value);
+      notes.value=lines.join('\n');
+      notes.dispatchEvent(new Event('input'));
+      notes.focus();
+    }));
+    update();
+    const checklistWebhook='https://script.google.com/macros/s/AKfycbzf_TX7E6F0j4hPPkOTuoObZelfaSpLjf5oM_1FrEnNsJWsDgAOIPjhjNiIgImoyYfN/exec';
+    const sendButton=document.getElementById('send-button');
+    const sendStatus=document.getElementById('send-status');
+    document.getElementById('checklist').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const payload={items:checks.map(item=>({label:item.dataset.label,checked:item.checked})),observations:notes.value.trim()};
+      sendButton.disabled=true;
+      sendStatus.className='send-status';
+      sendStatus.textContent='Enviando checklist…';
+      try{
+        await fetch(checklistWebhook,{method:'POST',mode:'no-cors',body:new URLSearchParams({kind:'casita-premia-checklist',payload:JSON.stringify(payload)})});
+        sendStatus.className='send-status success';
+        sendStatus.textContent='Solicitud enviada. Comprueba que el correo haya llegado a casitapremia@gmail.com.';
+      }catch{
+        sendStatus.className='send-status error';
+        sendStatus.textContent='No se ha podido enviar. Revisa la conexión e inténtalo de nuevo.';
+      }finally{sendButton.disabled=false;}
+    });
+  </script>
+</body>
+</html>
+
