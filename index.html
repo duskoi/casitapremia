@@ -198,7 +198,7 @@
     openDoor.addEventListener('click',event=>{event.preventDefault();resetDoor();doorModal.classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>doorCode.focus(),50)});
     closeDoor.addEventListener('click',closeDoorModal);
     doorModal.addEventListener('click',event=>{if(event.target===doorModal)closeDoorModal()});
-    doorForm.addEventListener('submit',event=>{event.preventDefault();const ok=doorCode.value==='1111';doorMessage.innerHTML=ok?translations[currentLang].doorSuccess+'<small>'+translations[currentLang].pushDoor+'</small>':translations[currentLang].doorError;doorMessage.className='door-message '+(ok?'success':'error');if(ok&&!entryNoticeSent){entryNoticeSent=true;fetch(entryWebhook,{method:'POST',mode:'no-cors',keepalive:true}).catch(()=>{});}if(!ok){doorCode.select()}});
+    doorForm.addEventListener('submit',event=>{event.preventDefault();const ok=doorCode.value==='4040';doorMessage.innerHTML=ok?translations[currentLang].doorSuccess+'<small>'+translations[currentLang].pushDoor+'</small>':translations[currentLang].doorError;doorMessage.className='door-message '+(ok?'success':'error');if(ok&&!entryNoticeSent){entryNoticeSent=true;fetch(entryWebhook,{method:'POST',mode:'no-cors',keepalive:true}).catch(()=>{});}if(!ok){doorCode.select()}});
     document.addEventListener('keydown',event=>{if(event.key==='Escape'&&doorModal.classList.contains('open'))closeDoorModal()});
   </script>
 </body>
